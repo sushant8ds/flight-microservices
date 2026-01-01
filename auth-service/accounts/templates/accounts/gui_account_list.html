@@ -1,0 +1,13 @@
+<h2>Account List (GUI)</h2>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Username</th><th>Email</th>
+    </tr>
+    {% for account in accounts %}
+    <tr>
+        <td>{{ account.id }}</td>
+        <td>{{ account.username }}</td>
+        <td>{{ account.email }}</td>
+    </tr>
+    {% endfor %}
+</table>

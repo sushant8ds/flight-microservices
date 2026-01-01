@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Booking List (GUI)</h2>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Flight</th><th>Passenger</th><th>Class</th>
+    </tr>
+    {% for booking in bookings %}
+    <tr>
+        <td>{{ booking.id }}</td>
+        <td>{{ booking.flight }}</td>
+        <td>{{ booking.passenger_name }}</td>
+        <td>{{ booking.seat_class }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

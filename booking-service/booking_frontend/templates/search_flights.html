@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Service | Search Flights</title>
+    <link rel="stylesheet" href="/static/css/booking_style.css">
+</head>
+<body>
+    <h1>Search Flights (Booking Service)</h1>
+    <form method="get" action="/search-flights/">
+        <label>Origin: <input type="text" name="origin" value="{{ origin|default:'' }}"></label>
+        <label>Destination: <input type="text" name="destination" value="{{ destination|default:'' }}"></label>
+        <button type="submit">Search</button>
+    </form>
+    {% if success %}
+        <p style="color:green;">{{ success }}</p>
+    {% endif %}
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+    <hr>
+    {% if flights %}
+        <table border="1">
+            <tr><th>ID</th><th>Airline</th><th>Plane</th><th>Origin</th><th>Destination</th><th>Depart</th><th>Arrive</th><th>Book</th></tr>
+            {% for flight in flights %}
+            <tr>
+                <td>{{ flight.id }}</td>
+                <td>{{ flight.airline }}</td>
+                <td>{{ flight.plane }}</td>
+                <td>{{ flight.origin.code }}</td>
+                <td>{{ flight.destination.code }}</td>
+                <td>{{ flight.depart_time }}</td>
+                <td>{{ flight.arrival_time }}</td>
+                <td>
+                    <form method="post" action="/search-flights/" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="flight_id" value="{{ flight.id }}">
+                        <button type="submit">Book</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% elif origin and destination %}
+        <p>No flights found for your search.</p>
+    {% endif %}
+    <a href="/">Home</a>
+</body>
+</html>

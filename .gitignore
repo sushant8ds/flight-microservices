@@ -1,0 +1,17 @@
+venv/
+__pycache__/
+*.pyc
+*.sqlite3
+.env
+.DS_Store
+
+# Python
+*.log
+
+# Django
+/staticfiles/
+media/
+
+# Kubernetes
+*.yaml~
+

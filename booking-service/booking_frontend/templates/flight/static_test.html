@@ -1,0 +1,14 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Static Test</title>
+    <link rel="stylesheet" href="{% static 'css/layout_style.css' %}">
+</head>
+<body>
+    <h1>Static File Test</h1>
+    <img src="{% static 'img/icon_logo.png' %}" alt="Logo" width="100">
+    <script src="{% static 'js/index.js' %}"></script>
+    <p>If you see the logo and no errors in the console, static files are working.</p>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% extends 'flight/layout.html' %}
+{% load static %}
+{% block head %}
+    <title>Review | Flight</title>
+    <link rel="stylesheet" href="{% static 'css/review_style.css' %}">
+{% endblock head %}
+{% block body %}
+    <section class="section section1">
+        <div class="container">
+            <h2>Review Your Booking</h2>
+            {% if ticket %}
+                <div class="ticket-details">
+                    <div>Reference No: {{ticket.ref_no}}</div>
+                    <div>Flight: {{ticket.flight.airline}} - {{ticket.flight.plane}}</div>
+                    <div>From: {{ticket.flight.origin.city}} ({{ticket.flight.origin.code}})</div>
+                    <div>To: {{ticket.flight.destination.city}} ({{ticket.flight.destination.code}})</div>
+                    <div>Departure: {{ticket.flight_ddate|date:'D, d M Y H:i'}} </div>
+                    <div>Passengers: {{ticket.passengers.count}}</div>
+                    <div>Status: {{ticket.status}}</div>
+                </div>
+                <form method="post" action="{% url 'review' ticket.ref_no %}">
+                    {% csrf_token %}
+                    <label for="review">Your Review:</label><br>
+                    <textarea name="review" id="review" rows="4" cols="50" required></textarea><br>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </form>
+            {% else %}
+                <p>No ticket found for review.</p>
+            {% endif %}
+            <a href="{% url 'bookings' %}">Back to Bookings</a>
+        </div>
+    </section>
+{% endblock %}

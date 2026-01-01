@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auth Service | Accounts</title>
+    <link rel="stylesheet" href="/static/css/auth_style.css">
+</head>
+<body>
+    <h1>All Accounts</h1>
+    <a href="/">Home</a>
+    <hr>
+    {% if accounts %}
+        <table border="1">
+            <tr><th>ID</th><th>Username</th><th>Email</th></tr>
+            {% for account in accounts %}
+            <tr>
+                <td>{{ account.id }}</td>
+                <td>{{ account.username }}</td>
+                <td>{{ account.email }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No accounts found.</p>
+    {% endif %}
+</body>
+</html>

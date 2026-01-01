@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Place List (GUI)</h2>
+<table border="1">
+    <tr>
+        <th>ID</th><th>City</th><th>Code</th>
+    </tr>
+    {% for place in places %}
+    <tr>
+        <td>{{ place.id }}</td>
+        <td>{{ place.city }}</td>
+        <td>{{ place.code }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

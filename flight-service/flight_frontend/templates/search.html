@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flight Service | Search</title>
+    <link rel="stylesheet" href="/static/css/search_style.css">
+</head>
+<body>
+    <h1>Flight Search Results</h1>
+    <form action="/search/" method="get">
+        <label>Origin: <input type="text" name="origin" value="{{ origin|default:'' }}"></label>
+        <label>Destination: <input type="text" name="destination" value="{{ destination|default:'' }}"></label>
+        <button type="submit">Search Flights</button>
+    </form>
+    <hr>
+    {% if flights %}
+        <table border="1">
+            <tr><th>ID</th><th>Airline</th><th>Plane</th><th>Origin</th><th>Destination</th><th>Depart</th><th>Arrive</th></tr>
+            {% for flight in flights %}
+            <tr>
+                <td>{{ flight.id }}</td>
+                <td>{{ flight.airline }}</td>
+                <td>{{ flight.plane }}</td>
+                <td>{{ flight.origin }}</td>
+                <td>{{ flight.destination }}</td>
+                <td>{{ flight.depart_time }}</td>
+                <td>{{ flight.arrival_time }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No flights found.</p>
+    {% endif %}
+</body>
+</html>

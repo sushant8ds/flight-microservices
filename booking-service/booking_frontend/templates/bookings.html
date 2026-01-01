@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Service | Bookings</title>
+    <link rel="stylesheet" href="/static/css/booking_style.css">
+</head>
+<body>
+    <h1>All Bookings</h1>
+    <a href="/">Home</a>
+    <hr>
+    {% if bookings %}
+        <table border="1">
+            <tr><th>ID</th><th>Flight</th><th>Passenger</th><th>Class</th></tr>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.flight }}</td>
+                <td>{{ booking.passenger_name }}</td>
+                <td>{{ booking.seat_class }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No bookings found.</p>
+    {% endif %}
+</body>
+</html>

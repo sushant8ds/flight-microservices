@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Flight List (GUI)</h2>
+<table border="1">
+    <tr>
+        <th>ID</th><th>Airline</th><th>Plane</th><th>Origin</th><th>Destination</th><th>Depart</th><th>Arrive</th>
+    </tr>
+    {% for flight in flights %}
+    <tr>
+        <td>{{ flight.id }}</td>
+        <td>{{ flight.airline }}</td>
+        <td>{{ flight.plane }}</td>
+        <td>{{ flight.origin }}</td>
+        <td>{{ flight.destination }}</td>
+        <td>{{ flight.depart_time }}</td>
+        <td>{{ flight.arrival_time }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

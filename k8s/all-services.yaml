@@ -1,0 +1,156 @@
+---
+# Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: flight-services
+
+---
+# Auth Service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  namespace: flight-services
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+      - name: auth-service
+        image: sushant8ds/auth-service:v2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8001
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: DEBUG
+          value: "0"
+
+---
+# Auth Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: flight-services
+spec:
+  selector:
+    app: auth-service
+  ports:
+  - name: http
+    port: 8001
+    targetPort: 8001
+  type: ClusterIP
+
+---
+# Booking Service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booking-service
+  namespace: flight-services
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: booking-service
+  template:
+    metadata:
+      labels:
+        app: booking-service
+    spec:
+      containers:
+      - name: booking-service
+        image: sushant8ds/booking-service:v7
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8002
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: DEBUG
+          value: "0"
+
+---
+# Booking Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: booking-service
+  namespace: flight-services
+spec:
+  selector:
+    app: booking-service
+  ports:
+  - name: http
+    port: 8002
+    targetPort: 8002
+  type: ClusterIP
+
+---
+# Flight Service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flight-service
+  namespace: flight-services
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flight-service
+  template:
+    metadata:
+      labels:
+        app: flight-service
+    spec:
+      containers:
+      - name: flight-service
+        image: sushant8ds/flight-service:v8
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8002
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        env:
+        - name: DEBUG
+          value: "0"
+
+---
+# Flight Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: flight-service
+  namespace: flight-services
+spec:
+  selector:
+    app: flight-service
+  ports:
+  - name: http
+    port: 8002
+    targetPort: 8002
+  type: ClusterIP

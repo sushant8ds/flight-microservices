@@ -1,0 +1,55 @@
+{% extends 'flight/layout.html' %}
+{% load static %}
+{% block head %}
+    <title>Book Flight | Flight</title>
+    <link rel="stylesheet" href="{% static 'css/booking_style.css' %}">
+{% endblock head %}
+{% block body %}
+    <section class="section section1">
+        <div class="container">
+            <h2>Book Flight</h2>
+            {% if error %}
+                <p style="color:red;">{{ error }}</p>
+            {% endif %}
+            {% if success %}
+                <p style="color:green;">{{ success }}</p>
+                <a href="{% url 'search_flights' %}">Back to Search</a>
+            {% elif flight %}
+                <form method="post" action="{% url 'book_flight' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="flight_id" value="{{ flight.id }}">
+                    <table class="table table-bordered">
+                        <tr><th>Airline</th><td>{{ flight.airline }}</td></tr>
+                        <tr><th>Plane</th><td>{{ flight.plane }}</td></tr>
+                        <tr><th>Origin</th><td>{{ flight.origin.code }}</td></tr>
+                        <tr><th>Destination</th><td>{{ flight.destination.code }}</td></tr>
+                        <tr><th>Depart</th><td>{{ flight.depart_time }}</td></tr>
+                        <tr><th>Arrive</th><td>{{ flight.arrival_time }}</td></tr>
+                        <tr><th>Fare</th><td>{{ flight.fare|default:1000 }}</td></tr>
+                    </table>
+                    <h3>Passenger Details</h3>
+                    <label>Passenger Names (comma separated):<br>
+                        <input type="text" name="passenger_names" required>
+                    </label><br>
+                    <label>Seat Class:
+                        <select name="seat_class" required>
+                            <option value="economy">Economy</option>
+                            <option value="business">Business</option>
+                            <option value="first">First</option>
+                        </select>
+                    </label><br>
+                    <label>Mobile:<br>
+                        <input type="text" name="mobile" required>
+                    </label><br>
+                    <label>Email:<br>
+                        <input type="email" name="email" required>
+                    </label><br>
+                    <button type="submit" class="btn btn-success">Confirm Booking</button>
+                </form>
+            {% else %}
+                <p>No flight selected.</p>
+            {% endif %}
+            <a href="{% url 'search_flights' %}">Back to Search</a>
+        </div>
+    </section>
+{% endblock %}
